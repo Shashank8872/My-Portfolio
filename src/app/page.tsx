@@ -224,10 +224,10 @@ export default function ProfessionalResume(): JSX.Element {
               </div>
               
               <div className="flex gap-4 justify-center">
-                <a href="#" className="flex items-center justify-center w-14 h-14 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <a href="https://www.linkedin.com/in/shashank-h-9840b0250/" className="flex items-center justify-center w-14 h-14 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                   <Linkedin className="w-6 h-6" />
                 </a>
-                <a href="#" className="flex items-center justify-center w-14 h-14 bg-gray-700 text-gray-100 rounded-xl hover:bg-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <a href="https://github.com/Shashank8872" className="flex items-center justify-center w-14 h-14 bg-gray-700 text-gray-100 rounded-xl hover:bg-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                   <Github className="w-6 h-6" />
                 </a>
               </div>
