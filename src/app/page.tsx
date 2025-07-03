@@ -36,6 +36,7 @@ interface WorkExperience {
 export default function ProfessionalResume(): JSX.Element {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
   useEffect(() => {
     setIsVisible(true);
@@ -156,23 +157,39 @@ export default function ProfessionalResume(): JSX.Element {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+    <div className={`min-h-screen transition-colors duration-500 ${
+      isDarkMode 
+        ? 'bg-gray-900 text-gray-100' 
+        : 'bg-gray-50 text-gray-900'
+    }`} style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+      
+      {/* Theme Toggle Button */}
+      <div className="fixed top-6 right-6 z-50">
+        <button
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className={`p-3 rounded-xl shadow-lg transition-all duration-300 ${
+            isDarkMode 
+              ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700' 
+              : 'bg-white text-gray-600 hover:bg-gray-100'
+          } border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
       {/* Header */}
-      <header className={`bg-gray-800 shadow-2xl transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
+      <header className={`shadow-2xl transition-all duration-1000 ${
+        isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'
+      } ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
             <div className="lg:col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full animate-pulse"></div>
-                <span className="text-cyan-400 font-semibold tracking-wide">Available for Opportunities</span>
+                <div className="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse"></div>
+                <span className="text-green-400 font-medium tracking-wide">Open to New Opportunities</span>
               </div>
               
-              <h1 className="text-6xl lg:text-7xl font-black text-white mb-6" style={{ 
+              <h1 className={`text-6xl lg:text-7xl font-black mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`} style={{ 
                 fontFamily: '"Playfair Display", "Georgia", serif',
-                background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 65%, #60a5fa 85%, #3b82f6 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
                 letterSpacing: '-0.02em',
                 fontWeight: '900',
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
@@ -182,29 +199,28 @@ export default function ProfessionalResume(): JSX.Element {
               }}>
                 Shashank
               </h1>
- 
               
-              <div className="text-2xl text-cyan-400 mb-6 font-semibold">
-                Software Developer
+              <div className="text-2xl text-cyan-400 mb-6 font-medium">
+                Software Developer & Creative Problem Solver
               </div>
               
-              <div className="flex items-center gap-3 text-gray-400 mb-8">
+              <div className={`flex items-center gap-3 mb-8 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 <MapPin className="w-5 h-5" />
                 <span className="text-lg">Manipal, Karnataka, India</span>
               </div>
               
-              <div className="space-y-3 text-gray-300">
+              <div className={`space-y-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                 <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                  <span className="text-lg"><span className="font-semibold text-white">Experience:</span> 1+ years</span>
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span className="text-lg"><span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Experience:</span> 1+ years building digital solutions</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-lg"><span className="font-semibold text-white">Specialization:</span> VR/AR Development, Game Development, Full Stack.</span>
+                  <span className="text-lg"><span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Passion:</span> VR/AR Development, Game Development, Full Stack. </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-lg"><span className="font-semibold text-white">Focus:</span> Building immersive digital experiences</span>
+                  <span className="text-lg"><span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Mission:</span> Creating immersive experiences that matter</span>
                 </div>
               </div>
             </div>
@@ -217,17 +233,25 @@ export default function ProfessionalResume(): JSX.Element {
                   <span className="font-medium">shashank.8872@gmail.com</span>
                 </a>
                 <a href="tel:+919483879128" 
-                   className="flex items-center gap-3 px-6 py-4 bg-gray-700 text-gray-100 rounded-xl hover:bg-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                   className={`flex items-center gap-3 px-6 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 ${
+                     isDarkMode 
+                       ? 'bg-gray-700 text-gray-100 hover:bg-gray-600' 
+                       : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                   }`}>
                   <Phone className="w-5 h-5" />
                   <span className="font-medium">+91 9483879128</span>
                 </a>
               </div>
               
               <div className="flex gap-4 justify-center">
-                <a href="https://www.linkedin.com/in/shashank-h-9840b0250/" className="flex items-center justify-center w-14 h-14 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <a href="#" className="flex items-center justify-center w-14 h-14 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                   <Linkedin className="w-6 h-6" />
                 </a>
-                <a href="https://github.com/Shashank8872" className="flex items-center justify-center w-14 h-14 bg-gray-700 text-gray-100 rounded-xl hover:bg-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <a href="#" className={`flex items-center justify-center w-14 h-14 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 ${
+                  isDarkMode 
+                    ? 'bg-gray-700 text-gray-100 hover:bg-gray-600' 
+                    : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                }`}>
                   <Github className="w-6 h-6" />
                 </a>
               </div>
@@ -242,12 +266,16 @@ export default function ProfessionalResume(): JSX.Element {
           <div className="xl:col-span-2 space-y-8">
             {/* Experience Section */}
             <section className={`transition-all duration-1000 delay-200 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <div className="bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 p-8 hover:border-gray-600 transition-all duration-300">
+              <div className={`rounded-2xl shadow-2xl border p-8 hover:border-gray-600 transition-all duration-300 ${
+                isDarkMode 
+                  ? 'bg-gray-800 border-gray-700' 
+                  : 'bg-white border-gray-200'
+              }`}>
                 <div className="flex items-center gap-4 mb-8">
                   <div className="p-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl">
                     <Briefcase className="w-6 h-6 text-white" />
                   </div>
-                  <h2 className="text-3xl font-bold text-white" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
+                  <h2 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
                     Work Experience
                   </h2>
                 </div>
@@ -257,10 +285,12 @@ export default function ProfessionalResume(): JSX.Element {
                     <div key={index} className="relative pl-8 border-l-2 border-cyan-500 last:border-l-0">
                       <div className="absolute -left-2 top-0 w-4 h-4 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"></div>
                       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                        <h3 className="text-xl font-bold text-white">{job.title}</h3>
-                        <div className="flex items-center gap-2 px-4 py-2 bg-gray-700 rounded-xl">
-                          <Calendar className="w-4 h-4 text-gray-400" />
-                          <span className="text-gray-300 text-sm font-medium">{job.period}</span>
+                        <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{job.title}</h3>
+                        <div className={`flex items-center gap-2 px-4 py-2 rounded-xl ${
+                          isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
+                        }`}>
+                          <Calendar className={`w-4 h-4 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} />
+                          <span className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{job.period}</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-4 mb-4">
@@ -273,12 +303,12 @@ export default function ProfessionalResume(): JSX.Element {
                           {job.type}
                         </span>
                       </div>
-                      <p className="text-gray-300 mb-4 leading-relaxed">{job.description}</p>
+                      <p className={`text-lg leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{job.description}</p>
                       <div className="space-y-3">
                         {job.achievements.map((achievement, achIndex) => (
                           <div key={achIndex} className="flex items-start gap-3">
                             <ChevronRight className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
-                            <p className="text-gray-300 leading-relaxed">{achievement}</p>
+                            <p className={`leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{achievement}</p>
                           </div>
                         ))}
                       </div>
@@ -290,12 +320,16 @@ export default function ProfessionalResume(): JSX.Element {
 
             {/* Projects Section */}
             <section className={`transition-all duration-1000 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <div className="bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 p-8 hover:border-gray-600 transition-all duration-300">
+              <div className={`rounded-2xl shadow-2xl border p-8 transition-all duration-300 ${
+                isDarkMode 
+                  ? 'bg-gray-800 border-gray-700 hover:border-gray-600' 
+                  : 'bg-white border-gray-200 hover:border-gray-300'
+              }`}>
                 <div className="flex items-center gap-4 mb-8">
                   <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl">
                     <Code className="w-6 h-6 text-white" />
                   </div>
-                  <h2 className="text-3xl font-bold text-white" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
+                  <h2 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
                     Projects
                   </h2>
                 </div>
@@ -304,36 +338,52 @@ export default function ProfessionalResume(): JSX.Element {
                   {projects.map((project, index) => (
                     <div 
                       key={index} 
-                      className="border border-gray-700 hover:border-cyan-500 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl bg-gray-900/50 backdrop-blur-sm"
+                      className={`border rounded-xl p-6 transition-all duration-300 hover:shadow-2xl backdrop-blur-sm ${
+                        isDarkMode 
+                          ? 'border-gray-700 hover:border-cyan-500 bg-gray-900/50' 
+                          : 'border-gray-200 hover:border-cyan-400 bg-gray-50/50'
+                      }`}
                       onMouseEnter={() => setHoveredProject(index)}
                       onMouseLeave={() => setHoveredProject(null)}
                     >
                       <div className="flex items-start gap-4">
-                        <div className={`p-3 bg-gray-700 rounded-xl transition-all duration-300 ${hoveredProject === index ? 'bg-gradient-to-r from-cyan-500 to-blue-600' : ''}`}>
-                          <span className={`text-gray-400 ${hoveredProject === index ? 'text-white' : ''}`}>
+                        <div className={`p-3 rounded-xl transition-all duration-300 ${
+                          hoveredProject === index 
+                            ? 'bg-gradient-to-r from-cyan-500 to-blue-600' 
+                            : isDarkMode ? 'bg-gray-700' : 'bg-gray-200'
+                        }`}>
+                          <span className={`${
+                            hoveredProject === index 
+                              ? 'text-white' 
+                              : isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                          }`}>
                             {project.icon}
                           </span>
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-3">
-                            <h3 className="text-xl font-bold text-white">
+                            <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                               {project.title}
                             </h3>
                             <span className={`px-3 py-1 text-xs rounded-full font-medium ${
                               project.status === 'Completed' ? 'text-green-400 bg-green-900/30' :
                               project.status === 'Active' ? 'text-blue-400 bg-blue-900/30' :
                               project.status === 'Production' ? 'text-purple-400 bg-purple-900/30' :
-                              'text-gray-400 bg-gray-700'
+                              isDarkMode ? 'text-gray-400 bg-gray-700' : 'text-gray-600 bg-gray-200'
                             }`}>
                               {project.status}
                             </span>
                           </div>
-                          <p className="text-gray-300 mb-4 leading-relaxed">{project.description}</p>
+                          <p className={`mb-4 leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{project.description}</p>
                           <div className="flex flex-wrap gap-2">
                             {project.tags.map((tag, tagIndex) => (
                               <span 
                                 key={tagIndex} 
-                                className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:text-white transition-all duration-300 font-medium"
+                                className={`px-3 py-1 rounded-full text-sm hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:text-white transition-all duration-300 font-medium ${
+                                  isDarkMode 
+                                    ? 'bg-gray-700 text-gray-300' 
+                                    : 'bg-gray-200 text-gray-700'
+                                }`}
                               >
                                 {tag}
                               </span>
@@ -349,23 +399,31 @@ export default function ProfessionalResume(): JSX.Element {
 
             {/* Education Section */}
             <section className={`transition-all duration-1000 delay-600 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <div className="bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 p-8 hover:border-gray-600 transition-all duration-300">
+              <div className={`rounded-2xl shadow-2xl border p-8 transition-all duration-300 ${
+                isDarkMode 
+                  ? 'bg-gray-800 border-gray-700 hover:border-gray-600' 
+                  : 'bg-white border-gray-200 hover:border-gray-300'
+              }`}>
                 <div className="flex items-center gap-4 mb-8">
                   <div className="p-3 bg-gradient-to-r from-green-500 to-teal-600 rounded-xl">
                     <GraduationCap className="w-6 h-6 text-white" />
                   </div>
-                  <h2 className="text-3xl font-bold text-white" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
+                  <h2 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
                     Education
                   </h2>
                 </div>
                 
                 <div className="space-y-6">
                   {educationData.map((edu, index) => (
-                    <div key={index} className="border border-gray-700 rounded-xl p-6 hover:border-green-500 transition-all duration-300 bg-gray-900/50 backdrop-blur-sm">
-                      <h3 className="text-xl font-bold text-white mb-2">{edu.degree}</h3>
+                    <div key={index} className={`border rounded-xl p-6 transition-all duration-300 backdrop-blur-sm ${
+                      isDarkMode 
+                        ? 'border-gray-700 hover:border-green-500 bg-gray-900/50' 
+                        : 'border-gray-200 hover:border-green-400 bg-gray-50/50'
+                    }`}>
+                      <h3 className={`text-xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{edu.degree}</h3>
                       <p className="text-green-400 font-semibold mb-3">{edu.institution}</p>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-300">{edu.period}</span>
+                        <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{edu.period}</span>
                         <span className="px-4 py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white font-semibold rounded-xl">
                           {edu.grade}
                         </span>
@@ -381,12 +439,16 @@ export default function ProfessionalResume(): JSX.Element {
           <div className="space-y-8">
             {/* Skills Section */}
             <section className={`transition-all duration-1000 delay-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <div className="bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 p-6 hover:border-gray-600 transition-all duration-300">
+              <div className={`rounded-2xl shadow-2xl border p-6 transition-all duration-300 ${
+                isDarkMode 
+                  ? 'bg-gray-800 border-gray-700 hover:border-gray-600' 
+                  : 'bg-white border-gray-200 hover:border-gray-300'
+              }`}>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl">
                     <Code className="w-5 h-5 text-white" />
                   </div>
-                  <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>Technical Skills</h2>
+                  <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>Technical Skills</h2>
                 </div>
                 
                 <div className="space-y-6">
@@ -396,15 +458,19 @@ export default function ProfessionalResume(): JSX.Element {
                         <span className="text-cyan-400">
                           {category.icon}
                         </span>
-                        <h3 className="font-semibold text-white">{category.title}</h3>
+                        <h3 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{category.title}</h3>
                       </div>
                       <div className="space-y-2">
                         {category.skills.map((skill, skillIndex) => (
                           <div 
                             key={skillIndex} 
-                            className="flex items-center justify-between py-3 px-4 bg-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 group"
+                            className={`flex items-center justify-between py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 group ${
+                              isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
+                            }`}
                           >
-                            <span className="text-gray-300 text-sm font-medium group-hover:text-white">{skill}</span>
+                            <span className={`text-sm font-medium group-hover:text-white ${
+                              isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                            }`}>{skill}</span>
                             <div className="w-2 h-2 bg-cyan-400 rounded-full group-hover:bg-white"></div>
                           </div>
                         ))}
@@ -417,20 +483,28 @@ export default function ProfessionalResume(): JSX.Element {
 
             {/* Coursework */}
             <section className={`transition-all duration-1000 delay-500 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <div className="bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 p-6 hover:border-gray-600 transition-all duration-300">
+              <div className={`rounded-2xl shadow-2xl border p-6 transition-all duration-300 ${
+                isDarkMode 
+                  ? 'bg-gray-800 border-gray-700 hover:border-gray-600' 
+                  : 'bg-white border-gray-200 hover:border-gray-300'
+              }`}>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl">
                     <Award className="w-5 h-5 text-white" />
                   </div>
-                  <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>Relevant Coursework</h2>
+                  <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>Relevant Coursework</h2>
                 </div>
                 
                 <div className="space-y-3">
                   {coursework.map((course, index) => (
-                    <div key={index} className="bg-gray-700 rounded-xl p-4 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-600 transition-all duration-300 group">
+                    <div key={index} className={`rounded-xl p-4 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-600 transition-all duration-300 group ${
+                      isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
+                    }`}>
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 bg-purple-400 rounded-full group-hover:bg-white"></div>
-                        <p className="text-gray-300 text-sm font-medium group-hover:text-white">{course}</p>
+                        <p className={`text-sm font-medium group-hover:text-white ${
+                          isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                        }`}>{course}</p>
                       </div>
                     </div>
                   ))}
@@ -440,16 +514,20 @@ export default function ProfessionalResume(): JSX.Element {
 
             {/* Career Objective */}
             <section className={`transition-all duration-1000 delay-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <div className="bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 p-6 hover:border-gray-600 transition-all duration-300">
+              <div className={`rounded-2xl shadow-2xl border p-6 transition-all duration-300 ${
+                isDarkMode 
+                  ? 'bg-gray-800 border-gray-700 hover:border-gray-600' 
+                  : 'bg-white border-gray-200 hover:border-gray-300'
+              }`}>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl">
                     <Target className="w-5 h-5 text-white" />
                   </div>
-                  <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>Career Objective</h2>
+                  <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>Career Objective</h2>
                 </div>
                 
-                <div className="bg-gray-700 rounded-xl p-4">
-                  <p className="text-gray-300 text-sm leading-relaxed">
+                <div className={`rounded-xl p-4 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                  <p className={`text-sm leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Highly motivated and eager to learn, I am seeking an Internship or Full-time role as a Software Developer. 
                     I aim to apply my skills in real-world projects while growing in a dynamic environment that encourages 
                     learning and innovation.
@@ -462,13 +540,13 @@ export default function ProfessionalResume(): JSX.Element {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 border-t border-gray-700 mt-16">
+      <footer className={`border-t mt-16 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="max-w-7xl mx-auto px-6 py-12 text-center">
-          <h3 className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-            Building Tomorrow's Digital Experiences
+          <h3 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`} style={{ fontFamily: 'JetBrains Mono, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}>
+            Let's Build Something Amazing Together
           </h3>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed">
-            Passionate about creating immersive digital experiences that bridge reality and imagination through innovative technology.
+          <p className={`max-w-2xl mx-auto text-lg leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+            Ready to collaborate on your next project? I'm passionate about turning ideas into reality through clean code and innovative design.
           </p>
         </div>
       </footer>
