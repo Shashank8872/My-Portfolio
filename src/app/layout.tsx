@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description: "Professional portfolio of SHASHANK H, Software Developer.",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
